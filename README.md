@@ -41,7 +41,7 @@ This software is licensed under the MIT License.
 
 You can install this library via Composer:
 ```
-composer require simplito/elliptic-ecc
+composer require simplito/elliptic-php
 ```
 
 

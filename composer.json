@@ -11,7 +11,8 @@
     "authors": [
         {
             "name": "Simplito Team",
-            "email": "s.smyczynski@simplito.com"
+            "email": "s.smyczynski@simplito.com",
+            "homepage": "https://simplito.com"
         }
     ],
     "repositories": [
