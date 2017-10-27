@@ -15,12 +15,6 @@
             "homepage": "https://simplito.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@simplito.com:bn-php"
-        }
-    ],
     "require": {
         "ext-gmp": "*",
         "simplito/bn-php": "~1.0.0"
