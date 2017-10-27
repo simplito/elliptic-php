@@ -2,13 +2,12 @@
 namespace Elliptic\EdDSA;
 
 use Elliptic\Utils;
-use Elliptic\EdDSA;
-
 
 class KeyPair {
     public $eddsa;
+    public $_pubBytes;
 /**
-* @param {EdDSA} eddsa - instance
+* @param {\Elliptic\EdDSA} eddsa - instance
 * @param {Object} params - public/private key parameters
 *
 * @param {Array<Byte>} [params.secret] - secret seed bytes

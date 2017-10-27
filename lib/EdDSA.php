@@ -1,12 +1,17 @@
 <?php
 namespace Elliptic;
 
-use Elliptic\Utils;
 use Elliptic\EdDSA\KeyPair;
 use Elliptic\EdDSA\Signature;
 
 class EdDSA {
-
+    
+    public $curve;
+    public $g;
+    public $pointClass;
+    public $encodingLength;
+    public $hash;
+    
     function __construct($curve) {
         assert('$curve == "ed25519"'); //, 'only tested with ed25519 so far');
 

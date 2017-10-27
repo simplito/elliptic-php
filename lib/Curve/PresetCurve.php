@@ -2,9 +2,6 @@
 
 namespace Elliptic\Curve;
 
-use Elliptic\Utils;
-use BN\BN;
-
 class PresetCurve
 {
     public $curve;

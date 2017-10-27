@@ -118,7 +118,7 @@ class Signature
         $octets = 1 + (log($len) / M_LN2 >> 3);
         array_push($arr, $octets | 0x80);
         while(--$octets)
-            array_push(($len >> ($octets << 3)) & 0xff);
+            array_push($arr, ($len >> ($octets << 3)) & 0xff);
         array_push($arr, $len);
     }
 

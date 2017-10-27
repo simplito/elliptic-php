@@ -2,11 +2,21 @@
 namespace Elliptic\Curve;
 
 use Elliptic\Curve\EdwardsCurve\Point;
-use Elliptic\Utils;
 use BN\BN;
 
 class EdwardsCurve extends BaseCurve
 {
+    public $twisted;
+    public $mOneA;
+    public $extended;
+    public $a;
+    public $c;
+    public $c2;
+    public $d;
+    public $d2;
+    public $dd;
+    public $oneC;
+    
     function __construct($conf)
     {
         // NOTE: Important as we are creating point in Base.call()

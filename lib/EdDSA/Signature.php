@@ -5,6 +5,9 @@ use Elliptic\Utils;
 use BN\BN;
 
 class Signature {
+    
+    public $eddsa;
+    
     /**
      * @param {EdDSA} eddsa - eddsa instance
      * @param {Array<Bytes>|Object} sig -

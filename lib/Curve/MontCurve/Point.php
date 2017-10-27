@@ -44,8 +44,8 @@ class Point extends \Elliptic\Curve\BaseCurve\Point
     {
         if( $this->isInfinity() )
             return "<EC Point Infinity>";
-        return "<EC Point x: " + $this->x->fromRed()->toString(16, 2) +
-            " z: " + $this->z->fromRed()->toString(16, 2) + ">";
+        return "<EC Point x: " . $this->x->fromRed()->toString(16, 2) .
+            " z: " . $this->z->fromRed()->toString(16, 2) + ">";
     }
 
     public function isInfinity() {

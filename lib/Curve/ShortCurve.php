@@ -2,7 +2,6 @@
 
 namespace Elliptic\Curve;
 
-use Elliptic\Utils;
 use Elliptic\Curve\ShortCurve\Point;
 use Elliptic\Curve\ShortCurve\JPoint;
 use BN\BN;

@@ -175,7 +175,7 @@ class JPoint extends \Elliptic\Curve\BaseCurve\Point
             if( ($i + 1) < $pow)
                 $jz4 = $jz4->redMul($jyd4);
 
-            $jx = nx;
+            $jx = $nx;
             $jz = $nz;
             $jyd = $dny;
         }
@@ -330,7 +330,7 @@ class JPoint extends \Elliptic\Curve\BaseCurve\Point
         $jx = $this->x;
         $jy = $this->y;
         $jz = $this->z;
-        $jz4 = $js->redSqr()->redSqr();
+        $jz4 = $jz->redSqr()->redSqr();
 
         $jx2 = $jx->redSqr();
         $jy2 = $jy->redSqr();
@@ -461,9 +461,9 @@ class JPoint extends \Elliptic\Curve\BaseCurve\Point
         if( $this->isInfinity() )
             return "<EC JPoint Infinity>";
 
-        return "<EC JPoint x: " + $this->x->toString(16, 2) +
-            " y: " + $this->y->toString(16, 2) +
-            " z: " + $this->z->toString(16, 2) + ">";
+        return "<EC JPoint x: " . $this->x->toString(16, 2) .
+            " y: " . $this->y->toString(16, 2) .
+            " z: " . $this->z->toString(16, 2) . ">";
     }
 
     public function __debugInfo() {
