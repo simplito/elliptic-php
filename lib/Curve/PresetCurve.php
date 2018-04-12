@@ -21,9 +21,6 @@ class PresetCurve
         $this->g = $this->curve->g;
         $this->n = $this->curve->n;
         $this->hash = isset($options["hash"]) ? $options["hash"] : null;
-
-        //assert('$this->g->validate()'); //, "Invalid curve");
-        //assert('$this->g->mul($this->n)->isInfinity()'); //, "Invalid curve, G*N != O");
     }
 }
 

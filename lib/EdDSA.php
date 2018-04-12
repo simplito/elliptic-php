@@ -13,7 +13,7 @@ class EdDSA {
     public $hash;
     
     function __construct($curve) {
-        assert('$curve == "ed25519"'); //, 'only tested with ed25519 so far');
+        assert($curve == "ed25519"); //, 'only tested with ed25519 so far');
 
         $curve = \Elliptic\Curves::getCurve($curve)->curve;
         $this->curve = $curve;

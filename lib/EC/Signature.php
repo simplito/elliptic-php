@@ -21,7 +21,7 @@ class Signature
         }
         
         if (isset($options['r'])) {
-            assert('isset($options["r"]) && isset($options["s"])'); //, "Signature without r or s");
+            assert(isset($options["r"]) && isset($options["s"])); //, "Signature without r or s");
             $this->r = new BN($options["r"], 16);
             $this->s = new BN($options["s"], 16);
 

@@ -19,7 +19,6 @@ class EC
     {
         if( is_string($options) )
         {
-            //assert('Curves::hasCurve($options)'); //, "Unknown curve " . $options);
             $options = Curves::getCurve($options);
         }
 
@@ -212,7 +211,7 @@ class EC
 
     public function recoverPubKey($msg, $signature, $j, $enc = false)
     {
-        assert('(3 & $j) === $j'); //, "The recovery param is more than two bits");
+        assert((3 & $j) === $j); //, "The recovery param is more than two bits");
         $signature = new Signature($signature, $enc);
 
         $e = new BN($msg, 16);

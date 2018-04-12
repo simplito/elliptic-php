@@ -107,7 +107,7 @@ class KeyPair {
     }
 
     public function sign($message) {
-        assert('$this->_secret'); //, 'KeyPair can only verify');
+        assert($this->_secret); //, 'KeyPair can only verify');
         return $this->eddsa->sign($message, $this);
     }
 
@@ -116,7 +116,7 @@ class KeyPair {
     }
 
     public function getSecret($enc = false) {
-        assert('$this->_secret'); //, 'KeyPair is public only');
+        assert($this->_secret); //, 'KeyPair is public only');
         return Utils::encode($this->secret(), $enc);
     }
 

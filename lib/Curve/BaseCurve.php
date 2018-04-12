@@ -65,7 +65,7 @@ abstract class BaseCurve
 
     public function _fixedNafMul($p, $k)
     {
-        assert('isset($p->precomputed)');
+        assert(isset($p->precomputed));
 
         $doubles = $p->_getDoubles();
         $naf = Utils::getNAF($k, 1);
@@ -130,7 +130,7 @@ abstract class BaseCurve
                 break;
             $z = $naf[$i];
 
-            assert('$z != 0');
+            assert($z != 0);
 
             if( $p->type == "affine" )
             {
@@ -304,9 +304,9 @@ abstract class BaseCurve
         if(($bytes[0] == 0x04 || $bytes[0] == 0x06 || $bytes[0] == 0x07) && ($count - 1) == (2 * $len) )
         {
             if( $bytes[0] == 0x06 )
-                assert('$bytes[$count - 1] % 2 == 0');
+                assert($bytes[$count - 1] % 2 == 0);
             elseif( $bytes[0] == 0x07 )
-                assert('$bytes[$count - 1] % 2 == 1');
+                assert($bytes[$count - 1] % 2 == 1);
 
             return $this->point(array_slice($bytes, 1, $len), array_slice($bytes, 1 + $len, $len));
         }

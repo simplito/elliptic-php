@@ -31,8 +31,9 @@ class EdwardsCurve extends BaseCurve
         $this->c2 = $this->c->redSqr();
         $this->d = (new BN($conf["d"], 16))->toRed($this->red);
         $this->dd = $this->d->redAdd($this->d);
-
-        assert('!$this->twisted || $this->c->fromRed()->cmpn(1) == 0');
+        if (assert_options(ASSERT_ACTIVE)) {
+            assert(!$this->twisted || $this->c->fromRed()->cmpn(1) == 0);
+        }
         $this->oneC = ($conf["c"] | 0) == 1;
     }
   

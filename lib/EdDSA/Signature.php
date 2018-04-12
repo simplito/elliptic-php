@@ -29,7 +29,7 @@ class Signature {
             ];
         }
 
-        assert('$sig["R"] && $sig["S"]'); //, 'Signature without R or S');
+        assert($sig["R"] && $sig["S"]); //, 'Signature without R or S');
 
         if ($eddsa->isPoint($sig["R"]))
             $this->_R = $sig["R"];

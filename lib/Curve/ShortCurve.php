@@ -65,7 +65,9 @@ class ShortCurve extends BaseCurve
             else
             {
                 $lambda = $lambdas[1];
-                assert( '$this->g->mul($lambda)->x->cmp($this->g->x->redMul($beta)) === 0' );
+                if (assert_options(ASSERT_ACTIVE)) {
+                    assert($this->g->mul($lambda)->x->cmp($this->g->x->redMul($beta)) === 0);
+                }
             }
         }
 
