@@ -33,7 +33,7 @@ class Signature
         }
 
         if (!$this->_importDER($options, $enc))
-            throw new Exception('Unknown signature format');
+            throw new \Exception('Unknown signature format');
 
     }
 
