@@ -251,14 +251,14 @@ class EC
             try {
                 $Qprime = $this->recoverPubKey($e, $signature, $i);
             }
-            catch(Exception $e) {
+            catch(\Exception $e) {
                 continue;
             }
 
             if( $Qprime->eq($Q))
                 return $i;
         }
-        throw new Exception("Unable to find valid recovery factor");
+        throw new \Exception("Unable to find valid recovery factor");
     }
 }
 
