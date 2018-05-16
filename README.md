@@ -163,6 +163,120 @@ echo $shared2->toString(16) . "\n";
 
 NOTE: `.derive()` returns a [BN][1] instance.
 
+### Using EC directly
+
+Use case examples:
+
+#### Computing public key from private 
+
+```php
+use Elliptic\EC;
+
+$ec = new EC('secp256k1');
+
+$priv_hex = "751ce088f64404e5889bf7e9e5c280b200b2dc158461e96b921df39a1dbc6635";
+$pub_hex  = "03a319a1d10a91ada9a01ab121b81ae5f14580083a976e74945cdb014a4a52bae6";
+
+$priv = $ec->keyFromPrivate($priv_hex);
+if ($pub_hex == $priv->getPublic(true, "hex")) {
+    echo "Success\n";
+} else {
+    echo "Fail\n";
+}
+```
+
+#### Verifying Bitcoin Message Signature
+
+```php
+use Elliptic\EC;
+use StephenHill\Base58;
+
+// see: https://en.bitcoin.it/wiki/List_of_address_prefixes
+const MainNetId = "\x00";
+const TestNetId = "\x6F";
+const PrefixNetIdMap = [ "1" => MainNetId, "m" => TestNetId ];
+
+function pubKeyAddress($pubkey, $netid = MainNetId) {
+    $b58 = new Base58();
+
+    $pubenc   = hex2bin($pubkey->encode("hex", true));
+    $pubhash  = $netid . hash('ripemd160', hash('sha256', $pubenc, true), true);
+    $checksum = substr( hash('sha256', hash('sha256', $pubhash, true), true), 0, 4); 
+
+    return $b58->encode($pubhash . $checksum);
+}
+
+function verifySignature($message, $signature, $address) {
+    $signbin = base64_decode($signature);
+
+    $signarr  = [ "r" => bin2hex(substr($signbin, 1, 32)), 
+                  "s" => bin2hex(substr($signbin, 33, 32)) ];
+
+    $nv = ord(substr($signbin, 0, 1)) - 27; 
+    if ($nv != ($nv & 7)) 
+        return false;
+
+    $recid = ($nv & 3); 
+    $compressed = ($nv & 4) != 0;
+
+    $msglen = strlen($message);
+    $hash = hash('sha256', hash('sha256', "\x18Bitcoin Signed Message:\n" . chr($msglen) . $message, true));
+
+    $ec = new EC('secp256k1');
+    $pub = $ec->recoverPubKey($hash, $signarr, $recid);
+
+    $result = pubKeyAddress($pub, PrefixNetIdMap[$address[0]]);
+    return $result == $address;
+}
+
+$message   = "I like signatures";
+$signature = "H/zugYITIQTk8ZFWeXkbGCV2MzvMtbh+CnKBctbM9tP2UCb1B4LdyWFQuTZKxLdIDgP8Vsvl+0AEkBlY1HoyVw8=";
+$address   = "mxQadqtYQXYeUsSqdMdJxZwkzxbd2tuMdc";
+
+if (verifySignature($message, $signature, $address)) {
+    echo "Success\n";
+} else {
+    echo "Fail\n";
+}
+``` 
+
+#### Verifying Ethereum Signature
+
+```php
+use Elliptic\EC;
+use kornrunner\Keccak;
+
+function pubKeyToAddress($pubkey) {
+    return "0x" . substr(Keccak::hash(substr(hex2bin($pubkey->encode("hex")), 1), 256), 24);
+}
+
+function verifySignature($message, $signature, $address) {
+    $msglen = strlen($message);
+    $hash   = Keccak::hash("\x19Ethereum Signed Message:\n{$msglen}{$message}", 256);
+    $sign   = ["r" => substr($signature, 2, 64), 
+               "s" => substr($signature, 66, 64)];
+    $recid  = ord(hex2bin(substr($signature, 130, 2))) - 27; 
+    if ($recid != ($recid & 1)) 
+        return false;
+
+    $ec = new EC('secp256k1');
+    $pubkey = $ec->recoverPubKey($hash, $sign, $recid);
+
+    return $address == pubKeyToAddress($pubkey);
+}
+
+$address   = "0x5a214a45585b336a776b62a3a61dbafd39f9fa2a";
+$message   = "I like signatures";
+// signature returned by eth.sign(address, message)
+$signature = "0xacb175089543ac060ed48c3e25ada5ffeed6f008da9eaca3806e4acb707b9481401409ae1f5f9f290f54f29684e7bac1d79b2964e0edcb7f083bacd5fc48882e1b";
+
+if (verifySignature($message, $signature, $address)) {
+    echo "Success\n";
+} else {
+    echo "Fail\n";
+}
+
+```
 
 [0]: http://tools.ietf.org/html/rfc6979
 [1]: https://github.com/simplito/bn-php
