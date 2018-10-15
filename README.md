@@ -278,5 +278,31 @@ if (verifySignature($message, $signature, $address)) {
 
 ```
 
+### ECDH (secret based, base58 format)
+
+For usage in ed25519 oriented platforms like e.g. BigChainDB who use base58 encoded public / private keys.
+
+```php
+use Elliptic\EdDSA;
+use StephenHill\Base58;
+
+$mnemonic = "scheme spot photo card baby mountain device kick cradle pact join borrow";
+$secret = hash_pbkdf2('sha512', $mnemonic, 'mnemonic', 2048);
+
+$ec =  new EdDSA('ed25519');
+$kp = $ec->keyFromSecret($secret);
+
+assert($secret == $kp->getSecret('hex'));
+echo "Secret:  " . $kp->getSecret('hex') . PHP_EOL;
+
+echo "Private: " . $kp->priv()->toString('hex') . PHP_EOL;
+echo "Public:  " . $kp->getPublic('hex') .  PHP_EOL;
+
+$b58 = new Base58();
+echo PHP_EOL;
+echo "B58 Private: " . $b58->encode(hex2bin($kp->priv()->toString('hex'))) . PHP_EOL;
+echo "B58 Public:  " . $b58->encode(hex2bin($kp->getPublic('hex'))) .  PHP_EOL;
+```
+
 [0]: http://tools.ietf.org/html/rfc6979
 [1]: https://github.com/simplito/bn-php
