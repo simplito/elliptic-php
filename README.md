@@ -278,7 +278,7 @@ if (verifySignature($message, $signature, $address)) {
 
 ```
 
-### ECDH (secret based, base58 format)
+#### ECDH (secret based, base58 format)
 
 For usage in ed25519 oriented platforms like e.g. BigChainDB who use base58 encoded public / private keys.
 
@@ -303,6 +303,48 @@ echo PHP_EOL;
 echo "B58 Private: " . $b58->encode(hex2bin($kp->priv()->toString('hex'))) . PHP_EOL;
 echo "B58 Public:  " . $b58->encode(hex2bin($kp->getPublic('hex'))) .  PHP_EOL;
 ```
+
+#### BIP32 Public Parent Key -> Public Child Key derivation example
+
+```php
+<?php
+use Elliptic\EC;
+use BN\BN;
+
+$ec = new EC('secp256k1');
+
+// See: http://bip32.org using Derive From BIP32 Key
+// xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8
+$c_par = "873dff81c02f525623fd1fe5167eac3a55a049de3d314bb42ee227ffed37d508";
+$K_par = "0339a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c2";
+
+// Derived public child key 
+// Derivation path Simple: m/i
+// Keypair index i: 2018
+// xpub68Gmy5EVb2Begkah8BxugKchT5SExW5p9gEHBLnEvYSuwVppt2TzD3WTjxNk14R8pmHbz3MHB9n75M2zNYgkJUCwV9pYwU9Z21Awj7Cr5U9
+$expected_c_child = "a7470737ffde1458292e19e838534f400ad3c0f72e12f08eff79dee4fce11bed";
+$expected_K_child = "0376499d06f9e9df71d7ee08d13a91337fa2b92182d4afcddf917b8d9983eb4615";
+
+$i = 2018;
+$I_key  = hex2bin($c_par);
+$I_data = hex2bin($K_par) . pack("N", $i);
+$I = hash_hmac("sha512", $I_data, $I_key);
+$I_L = substr($I, 0, 64);
+$I_R = substr($I, 64, 64);
+$c_i = $I_R;
+
+$K_par_point = $ec->curve->decodePoint($K_par, "hex");
+$I_L_point = $ec->g->mul(new BN($I_L, 16));
+$K_i = $K_par_point->add($I_L_point);
+$K_i = $K_i->encodeCompressed("hex");
+
+if ($expected_c_child == $c_i && $expected_K_child == $K_i) {
+    echo "Success!\n";
+} else {
+    echo "Failure!\n";
+}
+```
+
 
 [0]: http://tools.ietf.org/html/rfc6979
 [1]: https://github.com/simplito/bn-php
