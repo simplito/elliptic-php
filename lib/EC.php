@@ -136,7 +136,17 @@ class EC
             if( $k->cmpn(1) <= 0 || $k->cmp($ns1) >= 0 )
                 continue;
 
-            $kp = $this->g->mul($k);
+            // Fix the bit-length of the random nonce,
+            // so that it doesn't leak via timing.
+            // This does not change that ks = k mod k
+            $ks = $k->add($this->n);
+            $kt = $ks->add($this->n);
+            if ($ks->bitLength() === $this->n->bitLength()) {
+                $kp = $this->g->mul($kt);
+            } else {
+                $kp = $this->g->mul($ks);
+            }
+
             if( $kp->isInfinity() )
                 continue;
 
