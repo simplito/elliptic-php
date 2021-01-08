@@ -6,7 +6,7 @@ use \Elliptic\Utils;
 
 function toHex($arg) { return strtoupper(Utils::toHex($arg)); }
 
-class ED25519Test extends PHPUnit_Framework_TestCase {
+class ED25519Test extends \PHPUnit\Framework\TestCase {
     public function derivations() {
         $data = json_decode( file_get_contents(__DIR__ . "/fixtures/derivation-fixtures"), true);
         $data = array_slice($data, 0, 50);

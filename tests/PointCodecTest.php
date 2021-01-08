@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
-class PointCodecTest extends PHPUnit_Framework_TestCase {
+class PointCodecTest extends \PHPUnit\Framework\TestCase {
     function makeShortTest($definition) {
         $curve = \Elliptic\Curves::getCurve("secp256k1")->curve;
 
@@ -36,12 +36,12 @@ class PointCodecTest extends PHPUnit_Framework_TestCase {
     static $shortPointOddY;
 
     public function test_should_throw_when_trying_to_decode_random_bytes() {
-        $this->setExpectedException("Exception");
+        $this->expectException(\Exception::class);
         \Elliptic\Curves::getCurve("secp256k1")->curve->decodePoint(
             '05' .
             '79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798');
     }
-    
+
     public function test_should_be_able_to_encode_and_decode_a_short_curve_point_with_even_Y() {
         $f = $this->makeShortTest(self::$shortPointEvenY);
         $f();
