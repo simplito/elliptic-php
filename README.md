@@ -161,7 +161,7 @@ echo $shared1->toString(16) . "\n";
 echo $shared2->toString(16) . "\n";
 ```
 
-NOTE: `.derive()` returns a [BN][1] instance.
+NOTE: `.derive()` returns a [BN][1] instance. The resulting hex string is not zero-padded to constant size. Note that when interoperating with other libraries or using the result in a hash function.
 
 ### Using EC directly
 
