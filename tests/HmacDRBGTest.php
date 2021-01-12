@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
-class HmacDRBGTest extends PHPUnit_Framework_TestCase {
+class HmacDRBGTest extends \PHPUnit\Framework\TestCase {
 
     public function test_should_support_hmac_drbg_sha256() {
         function doDrbg($opt) {
