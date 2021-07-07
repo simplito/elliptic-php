@@ -5,7 +5,7 @@
     "homepage": "https://github.com/simplito/elliptic-php",
     "keywords": ["elliptic", "curve", "cryptography", "ECC", 
                  "ECDH", "ECDSA", "EdDSA", 
-                 "secp256k1", "curve25519", "ed25519", 
+                 "secp256k1", "curve25519", "curve25519-weier", "ed25519", 
                  "nistp192", "nistp224", "nistp256", "nistp384", "nistp521"],
     "license": "MIT",
     "authors": [
