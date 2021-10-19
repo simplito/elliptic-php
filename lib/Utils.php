@@ -5,6 +5,12 @@ namespace Elliptic;
 use \Exception;
 use BN\BN;
 
+if (!function_exists("random_int")) {
+    function random_int($a, $b) {
+        return rand($a, $b);
+    }
+}
+
 class Utils
 {
     public static function toArray($msg, $enc = false)
@@ -149,7 +155,7 @@ class Utils
     {
         $res = "";
         for($i = 0; $i < $count; $i++)
-            $res .= chr(rand(0, 255));
+            $res .= chr(random_int(0, 255));
         return $res;
     }
 
