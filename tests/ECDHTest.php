@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
-class ECDHTest extends PHPUnit_Framework_TestCase {
+class ECDHTest extends \PHPUnit\Framework\TestCase {
     public function test_should_work_with_secp256k1_curve() {
         $this->doTest('secp256k1');
     }

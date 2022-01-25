@@ -2,7 +2,7 @@
 require_once __DIR__ . "/../vendor/autoload.php";
 use BN\BN;
 
-class ECDSATest extends PHPUnit_Framework_TestCase {
+class ECDSATest extends \PHPUnit\Framework\TestCase {
 
     function ECDSACurveNames() {
         return [
@@ -276,7 +276,7 @@ class ECDSATest extends PHPUnit_Framework_TestCase {
         $key = $ecdsa->keyFromPublic($vector["pub"], 'hex');
         $msg = $vector["message"];
         $sig = $vector["sig"];
-        
+
         $actual = $ecdsa->verify($msg, $sig, $key);
         $this->assertEquals($actual, $vector["result"]);
     }
@@ -293,7 +293,7 @@ class ECDSATest extends PHPUnit_Framework_TestCase {
             "entropy" => hash('sha256', 'hello world', true)
         ));
         $this->assertEquals(
-            $keys->getPrivate('hex'), 
+            $keys->getPrivate('hex'),
             '6160edb2b218b7f1394b9ca8eb65a72831032a1f2f3dc2d99291c2f7950ed887');
     }
 
@@ -312,7 +312,7 @@ class ECDSATest extends PHPUnit_Framework_TestCase {
         $message =
             'f75c6b18a72fabc0f0b888c3da58e004f0af1fe14f7ca5d8c897fe164925d5e9';
 
-        $this->setExpectedException("Exception");
+        $this->expectException(\Exception::class);
         $ec->recoverPubKey($message, [
             "r" => 'fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364140',
             "s" => '8887321be575c8095f789dd4c743dfe42c1820f9231f98a962b210e3ac2452a3'
