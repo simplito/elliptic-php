@@ -31,7 +31,8 @@ class EdDSA {
      * @param {Array|String|KeyPair} secret - secret bytes or a keypair
      * @returns {Signature} - signature
      */
-    public function sign($message, $secret) {
+    public function sign($message, #[\SensitiveParameter]
+						 $secret) {
         $message = Utils::parseBytes($message);
         $key = $this->keyFromSecret($secret);
         $r = $this->hashInt($key->messagePrefix(), $message);
@@ -72,7 +73,8 @@ class EdDSA {
         return KeyPair::fromPublic($this, $pub);
     }
 
-    public function keyFromSecret($secret) {
+    public function keyFromSecret(#[\SensitiveParameter]
+		$secret) {
         return KeyPair::fromSecret($this, $secret);
     }
 

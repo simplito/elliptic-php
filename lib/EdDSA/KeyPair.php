@@ -15,7 +15,8 @@ class KeyPair {
 * @param {Array<Byte>} [params.pub] - public key point encoded as bytes
 *
 */
-    function __construct($eddsa, $params) {
+    function __construct($eddsa, #[\SensitiveParameter]
+						 $params) {
         $this->eddsa = $eddsa;
         $this->_secret = isset($params["secret"]) ? Utils::parseBytes($params["secret"]) : null;
         if (!isset($params["pub"])) {
@@ -35,7 +36,8 @@ class KeyPair {
         return new KeyPair($eddsa, [ "pub" => $pub ]);
     }
 
-    public static function fromSecret($eddsa, $secret) {
+    public static function fromSecret($eddsa, #[\SensitiveParameter]
+									  $secret) {
         if ($secret instanceof KeyPair)
             return $secret;
         return new KeyPair($eddsa, [ "secret" => $secret ]);

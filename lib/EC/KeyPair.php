@@ -10,7 +10,8 @@ class KeyPair
     public $pub;
     public $priv;
 
-    function __construct($ec, $options)
+    function __construct($ec, #[\SensitiveParameter]
+                         $options)
     {
         $this->ec = $ec;
 
@@ -35,7 +36,8 @@ class KeyPair
         ));
     }
 
-    public static function fromPrivate($ec, $priv, $enc)
+    public static function fromPrivate($ec, #[\SensitiveParameter]
+                                       $priv, $enc)
     {
         if( $priv instanceof KeyPair )
             return $priv;
@@ -88,7 +90,8 @@ class KeyPair
         return $this->priv;
     }
 
-    private function _importPrivate($key, $enc)
+    private function _importPrivate(#[\SensitiveParameter]
+        $key, $enc)
     {
         $this->priv = new BN($key, (isset($enc) && $enc) ? $enc : 16);
 
