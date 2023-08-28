@@ -40,11 +40,13 @@ class EC
             $this->hash = $options["curve"]->hash;
     }
 
-    public function keyPair($options) {
+    public function keyPair(#[\SensitiveParameter]
+        $options) {
         return new KeyPair($this, $options);
     }
 
-    public function keyFromPrivate($priv, $enc = false) {
+    public function keyFromPrivate(#[\SensitiveParameter]
+        $priv, $enc = false) {
         return KeyPair::fromPrivate($this, $priv, $enc);
     }
 
@@ -87,7 +89,8 @@ class EC
         return $msg->sub($this->n);
     }
 
-    public function sign($msg, $key, $enc = null, $options = null)
+    public function sign($msg, #[\SensitiveParameter]
+                         $key, $enc = null, $options = null)
     {
         if( !is_string($enc) )
         {
