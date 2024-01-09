@@ -13,6 +13,8 @@ if (!function_exists("random_int")) {
 
 class Utils
 {
+    public static $ASSERT_ENABLED;
+    
     public static function toArray($msg, $enc = false)
     {
         if( is_array($msg) )
@@ -168,5 +170,7 @@ class Utils
         $array[$key] = $value;
     }
 }
+
+Utils::$ASSERT_ENABLED = ini_get("zend.assertions") === "1";
 
 ?>

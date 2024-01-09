@@ -43,7 +43,7 @@ class HmacDRBG
         $nonce  = Utils::toBin($options["nonce"], $options["nonceEnc"]);
         $pers  = Utils::toBin($options["pers"], $options["persEnc"]);
         
-        if (assert_options(ASSERT_ACTIVE)) {
+        if (Utils::$ASSERT_ENABLED) {
             assert(strlen($entropy) >= ($this->minEntropy / 8));
         }
         $this->_init($entropy, $nonce, $pers);

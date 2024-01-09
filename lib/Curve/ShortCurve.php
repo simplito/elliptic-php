@@ -4,6 +4,7 @@ namespace Elliptic\Curve;
 
 use Elliptic\Curve\ShortCurve\Point;
 use Elliptic\Curve\ShortCurve\JPoint;
+use Elliptic\Utils;
 use BN\BN;
 use \Exception;
 
@@ -65,7 +66,7 @@ class ShortCurve extends BaseCurve
             else
             {
                 $lambda = $lambdas[1];
-                if (assert_options(ASSERT_ACTIVE)) {
+                if (Utils::$ASSERT_ENABLED) {
                     assert($this->g->mul($lambda)->x->cmp($this->g->x->redMul($beta)) === 0);
                 }
             }
