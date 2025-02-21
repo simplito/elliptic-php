@@ -11,7 +11,7 @@ This library is a PHP port of [elliptic](https://github.com/indutny/elliptic), a
 
 This software is licensed under the MIT License.
 
-Projects which use Fast ECC PHP library: [PrivMX WebMail](https://privmx.com), ...
+Projects which use Fast ECC PHP library: [PrivMX](https://privmx.dev).
 
 
 ## Benchmarks
